@@ -1,0 +1,19 @@
+query RunInput {
+  cart {
+    provinceAttribute: attribute(key: "Province") {
+      value
+    }
+    expressAttribute: attribute(key: "Express") {
+      value
+    }
+    deliveryGroups {
+      deliveryOptions {
+        handle
+        title
+        cost {
+          amount
+        }
+      }
+    }
+  }
+}

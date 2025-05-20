@@ -1,0 +1,9 @@
+{
+  "sameDayBlockHeader": "Choose Date & Time",
+  "secondDayBlockHeader": "Choose Date & Time",
+  "timeSlotHeader": "Select the desired time slot",
+  "timeSlotSelect": "Available time slots for {{ selectedDayName }}",
+  "noTimeSlotAvailable": "Unfortunately, there are no available time slots for {{ selectedDayName }}",
+  "attributeChangesAreNotSupported": "Attribute changes are not supported in this checkout",
+  "addExpressDeliveryHeader": "Add express delivery for +$10"
+}

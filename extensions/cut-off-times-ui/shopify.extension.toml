@@ -1,0 +1,127 @@
+# Learn more about configuring your checkout UI extension:
+# https://shopify.dev/api/checkout-extensions/checkout/configuration
+
+# The version of APIs your extension will receive. Learn more:
+# https://shopify.dev/docs/api/usage/versioning
+api_version = "2024-10"
+
+[[extensions]]
+name = "Date & time slots"
+handle = "cut-off-times-ui"
+type = "ui_extension"
+
+
+# Controls where in Shopify your extension will be injected,
+# and the file that contains your extension’s source code. Learn more:
+# https://shopify.dev/docs/api/checkout-ui-extensions/unstable/extension-targets-overview
+
+[[extensions.targeting]]
+module = "./src/Checkout.jsx"
+target = "purchase.checkout.shipping-option-list.render-before"
+
+[extensions.capabilities]
+# Gives your extension access to directly query Shopify’s storefront API.
+# https://shopify.dev/docs/api/checkout-ui-extensions/unstable/configuration#api-access
+api_access = true
+block_progress = true
+
+# Gives your extension access to make external network calls, using the
+# JavaScript `fetch()` API. Learn more:
+# https://shopify.dev/docs/api/checkout-ui-extensions/unstable/configuration#network-access
+# network_access = true
+
+# Loads metafields on checkout resources, including the cart,
+# products, customers, and more. Learn more:
+# https://shopify.dev/docs/api/checkout-ui-extensions/unstable/configuration#metafields
+
+[[extensions.metafields]]
+key = "second_day_delivery"
+namespace = "custom"
+
+# Defines settings that will be collected from merchants installing
+# your extension. Learn more:
+# https://shopify.dev/docs/api/checkout-ui-extensions/unstable/configuration#settings-definition
+
+[[extensions.settings.fields]]
+key = "monday_cot"
+type = "single_line_text_field"
+name = "Monday cut-off time"
+description = "Follow this format: 14:00"
+[extensions.settings]
+[[extensions.settings.fields]]
+key = "monday"
+type = "multi_line_text_field"
+name = "Monday time slots"
+description = "Leave blank if disabled. Follow this format: From 10:00 to 12:00 Prep 2hrs, From 12:00 to 14:00 Prep 1hrs"
+
+[[extensions.settings.fields]]
+key = "tuesday_cot"
+type = "single_line_text_field"
+name = "Tuesday cut-off time"
+description = "Follow this format: 14:00"
+[[extensions.settings.fields]]
+key = "tuesday"
+type = "multi_line_text_field"
+name = "Tuesday time slots"
+description = "Leave blank if disabled. Follow this format: From 10:00 to 12:00 Prep 2hrs, From 12:00 to 14:00 Prep 1hrs"
+
+[[extensions.settings.fields]]
+key = "wednesday_cot"
+type = "single_line_text_field"
+name = "Wednesday cut-off time"
+description = "Follow this format: 14:00"
+[[extensions.settings.fields]]
+key = "wednesday"
+type = "multi_line_text_field"
+name = "Wednesday time slots"
+description = "Leave blank if disabled. Follow this format: From 10:00 to 12:00 Prep 2hrs, From 12:00 to 14:00 Prep 1hrs"
+
+[[extensions.settings.fields]]
+key = "thursday_cot"
+type = "single_line_text_field"
+name = "Thursday cut-off time"
+description = "Follow this format: 14:00"
+[[extensions.settings.fields]]
+key = "thursday"
+type = "multi_line_text_field"
+name = "Thursday time slots"
+description = "Leave blank if disabled. Follow this format: From 10:00 to 12:00 Prep 2hrs, From 12:00 to 14:00 Prep 1hrs"
+
+[[extensions.settings.fields]]
+key = "friday_cot"
+type = "single_line_text_field"
+name = "Friday cut-off time"
+description = "Follow this format: 14:00"
+[[extensions.settings.fields]]
+key = "friday"
+type = "multi_line_text_field"
+name = "Friday time slots"
+description = "Leave blank if disabled. Follow this format: From 10:00 to 12:00 Prep 2hrs, From 12:00 to 14:00 Prep 1hrs"
+
+[[extensions.settings.fields]]
+key = "saturday_cot"
+type = "single_line_text_field"
+name = "Saturday cut-off time"
+description = "Follow this format: 14:00"
+[[extensions.settings.fields]]
+key = "saturday"
+type = "multi_line_text_field"
+name = "Saturday time slots"
+description = "Leave blank if disabled. Follow this format: From 10:00 to 12:00 Prep 2hrs, From 12:00 to 14:00 Prep 1hrs"
+
+[[extensions.settings.fields]]
+key = "sunday_cot"
+type = "single_line_text_field"
+name = "Sunday cut-off time"
+description = "Follow this format: 14:00"
+[[extensions.settings.fields]]
+key = "sunday"
+type = "multi_line_text_field"
+name = "Sunday time slots"
+description = "Leave blank if disabled. Follow this format: From 10:00 to 12:00 Prep 2hrs, From 12:00 to 14:00 Prep 1hrs"
+
+[[extensions.settings.fields]]
+key = "disabledDates"
+type = "multi_line_text_field"
+name = "Disabled dates"
+description = "Leave blank if not used. Follow this format: YYYY-MM-DD, 2024-10-7, 1999-12-31"

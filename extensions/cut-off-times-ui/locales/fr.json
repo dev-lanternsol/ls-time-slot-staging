@@ -1,0 +1,9 @@
+{
+  "sameDayBlockHeader": "Choisir la date et l'heure",
+  "secondDayBlockHeader": "Choisir la date et l'heure",
+  "timeSlotHeader": "Sélectionnez le créneau horaire souhaité",
+  "timeSlotSelect": "Créneaux horaires disponibles pour la journée choisie",
+  "noTimeSlotAvailable": "Malheureusement, il n'y a pas de créneaux horaires disponibles pour le jour choisi.",
+  "attributeChangesAreNotSupported": "Les modifications d'attributs ne sont pas prises en charge dans cette extraction.",
+  "addExpressDeliveryHeader": "Add express delivery for +$10"
+}

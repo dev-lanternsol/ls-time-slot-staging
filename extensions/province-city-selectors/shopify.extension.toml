@@ -1,0 +1,75 @@
+# Learn more about configuring your checkout UI extension:
+# https://shopify.dev/api/checkout-extensions/checkout/configuration
+
+# The version of APIs your extension will receive. Learn more:
+# https://shopify.dev/docs/api/usage/versioning
+api_version = "2024-10"
+
+[[extensions]]
+name = "Province/City Selectors"
+handle = "province-city-selectors"
+type = "ui_extension"
+
+
+# Controls where in Shopify your extension will be injected,
+# and the file that contains your extension’s source code. Learn more:
+# https://shopify.dev/docs/api/checkout-ui-extensions/unstable/extension-targets-overview
+
+[[extensions.targeting]]
+module = "./src/Checkout.jsx"
+target = "purchase.checkout.shipping-option-list.render-before"
+
+[extensions.capabilities]
+# Gives your extension access to directly query Shopify’s storefront API.
+# https://shopify.dev/docs/api/checkout-ui-extensions/unstable/configuration#api-access
+api_access = true
+block_progress = true
+
+# Gives your extension access to make external network calls, using the
+# JavaScript `fetch()` API. Learn more:
+# https://shopify.dev/docs/api/checkout-ui-extensions/unstable/configuration#network-access
+# network_access = true
+
+# Loads metafields on checkout resources, including the cart,
+# products, customers, and more. Learn more:
+# https://shopify.dev/docs/api/checkout-ui-extensions/unstable/configuration#metafields
+
+# [[extensions.metafields]]
+# namespace = "my_namespace"
+# key = "my_key"
+# [[extensions.metafields]]
+# namespace = "my_namespace"
+# key = "my_other_key"
+
+[[extensions.metafields]]
+key = "express_delivery"
+namespace = "custom"
+
+# Defines settings that will be collected from merchants installing
+# your extension. Learn more:
+# https://shopify.dev/docs/api/checkout-ui-extensions/unstable/configuration#settings-definition
+
+[extensions.settings]
+[[extensions.settings.fields]]
+key = "sameDayProvinces"
+type = "multi_line_text_field"
+name = "Same day delivery province list"
+description = "Leave blank if disabled. Follow this format: Akkar,Baalbeck,Bcharre..."
+
+[[extensions.settings.fields]]
+key = "bannedProvinces"
+type = "multi_line_text_field"
+name = "Banned provinces list"
+description = "Leave blank all provinces are enabled. Follow this format: Akkar,Baalbeck,Bcharre..."
+
+[[extensions.settings.fields]]
+key = "bannedCities"
+type = "multi_line_text_field"
+name = "Banned cities list"
+description = "Leave blank all cities are enabled. Follow this format: Aabdeh,Aaboudieh,Aamar..."
+
+[[extensions.settings.fields]]
+key = "expressBannedProvinces"
+type = "multi_line_text_field"
+name = "Express delivery banned provinces list"
+description = "Leave blank all provinces are enabled. Follow this format: Akkar,Baalbeck,Bcharre..."
