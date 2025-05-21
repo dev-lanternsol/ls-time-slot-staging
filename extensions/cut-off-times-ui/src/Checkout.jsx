@@ -368,15 +368,32 @@ function TimeSlotPickerComponent({translate, applyAttributeChange, selectedDayNa
     return result;
   }
   
-  // Helper function to check if current time is past the cut-off time
   function isPastCutOffTime(cutOffTime) {
-    const now = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Beirut" }));
-    const [hours, minutes] = cutOffTime.split(':').map(Number);
-    const cutOffDateTime = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Beirut" }));
-    cutOffDateTime.setHours(hours, minutes, 0, 0);
-  
-    return now > cutOffDateTime; // True if current time is past the cut-off time
+    const timeZone = "Asia/Beirut";
+    const [cutOffHours, cutOffMinutes] = cutOffTime.split(":").map(Number);
+
+    // Get current Beirut time parts
+    const formatter = new Intl.DateTimeFormat("en-US", {
+      timeZone,
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      hour12: false,
+    });
+
+    const parts = formatter.formatToParts(new Date());
+    const nowHours = +parts.find(p => p.type === "hour").value;
+    const nowMinutes = +parts.find(p => p.type === "minute").value;
+
+    console.log(`Now in Beirut: ${nowHours}:${nowMinutes}`);
+    console.log(`Cut-off Time: ${cutOffHours}:${cutOffMinutes}`);
+
+    // Compare manually
+    if (nowHours > cutOffHours) return true;
+    if (nowHours === cutOffHours && nowMinutes > cutOffMinutes) return true;
+    return false;
   }
+
   
   // Helper function to convert time string (e.g., "10:00") to a Date object for the specific day
   function convertToDateTime(time, day) {
