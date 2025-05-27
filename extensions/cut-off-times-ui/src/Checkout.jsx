@@ -300,6 +300,7 @@ function TimeSlotPickerComponent({translate, applyAttributeChange, selectedDayNa
   }
 
   useEffect(() => {
+    console.log(getDaySchedule(parsedWeeklySchedule,selectedDayName), selectedDayName)
     setAvailableTimeSlots(getDaySchedule(parsedWeeklySchedule,selectedDayName));
   }, [selectedDayName, parsedWeeklySchedule])
 
@@ -322,6 +323,8 @@ function TimeSlotPickerComponent({translate, applyAttributeChange, selectedDayNa
       if (dayBlock.includes(':')) {
         const [day, schedule] = dayBlock.split(': ');
         const dayLower = day.trim().toLowerCase();
+
+        console.log(dayLower)
     
         // Apply cut-off time logic only if it's today, otherwise render all schedules
         if (isToday && cutOffTimes[dayLower] && isPastCutOffTime(cutOffTimes[dayLower])) {
@@ -329,6 +332,7 @@ function TimeSlotPickerComponent({translate, applyAttributeChange, selectedDayNa
         } else if (schedule.trim() === 'disabled') {
           result[dayLower] = { enabled: false, schedule: [] };
         } else {
+          console.log("Enters here")
           const timeBlocks = schedule.split(", ");
           const parsedBlocks = timeBlocks.map((block) => {
             const timeMatch = block.match(/From (.*?) to (.*?) Prep/);
@@ -347,7 +351,10 @@ function TimeSlotPickerComponent({translate, applyAttributeChange, selectedDayNa
               fromDateTime.setMinutes(fromDateTime.getMinutes() - Math.floor((prepTime * 60) % 60));
 
               // Check if the current time is past the prep time, but only if it's today
-              const isDisabled = isToday && now >= fromDateTime;
+              let isDisabled = false;
+              if (dayLower != 'saturday') {
+                isDisabled = isToday && now >= fromDateTime;
+              }
     
               // Apply the time comparison logic only if the picked date is today
               return {
