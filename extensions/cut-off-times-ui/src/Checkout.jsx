@@ -208,7 +208,7 @@ function DatePickerComponent({translate, isLebanon, disabledDatesList, applyAttr
     setSelectedDayName(dayNames[current_day_number])
     
     var dayName = getDayName(currentDate_localISOTimeFormatted, "en-EN");
-    console.log("day", dayName)
+    //console.log("day", dayName)
     setSelectedDayName(dayName);
   }, [hasSecondDay])
 
@@ -235,7 +235,7 @@ function DatePickerComponent({translate, isLebanon, disabledDatesList, applyAttr
 
     
     var dayName = getDayName(newDate, "en-EN");
-    console.log("day", dayName)
+    //console.log("day", dayName)
     setSelectedDayName(dayName);
   };
 
@@ -246,7 +246,7 @@ function DatePickerComponent({translate, isLebanon, disabledDatesList, applyAttr
 
   // Function to handle the invalid dates
   const handleInvalidDate = () => {
-    console.log("is invalid date")
+    //console.log("is invalid date")
     setDatePickerError("Please select a valid date from the calendar.");
     setSelectedDate("");
     setSelectedDayName("");
@@ -300,7 +300,7 @@ function TimeSlotPickerComponent({translate, applyAttributeChange, selectedDayNa
   }
 
   useEffect(() => {
-    console.log(getDaySchedule(parsedWeeklySchedule,selectedDayName), selectedDayName)
+    //console.log(getDaySchedule(parsedWeeklySchedule,selectedDayName), selectedDayName)
     setAvailableTimeSlots(getDaySchedule(parsedWeeklySchedule,selectedDayName));
   }, [selectedDayName, parsedWeeklySchedule])
 
@@ -324,7 +324,7 @@ function TimeSlotPickerComponent({translate, applyAttributeChange, selectedDayNa
         const [day, schedule] = dayBlock.split(': ');
         const dayLower = day.trim().toLowerCase();
 
-        console.log(dayLower)
+        //console.log(dayLower)
     
         // Apply cut-off time logic only if it's today, otherwise render all schedules
         if (isToday && cutOffTimes[dayLower] && isPastCutOffTime(cutOffTimes[dayLower])) {
@@ -332,7 +332,7 @@ function TimeSlotPickerComponent({translate, applyAttributeChange, selectedDayNa
         } else if (schedule.trim() === 'disabled') {
           result[dayLower] = { enabled: false, schedule: [] };
         } else {
-          console.log("Enters here")
+          //console.log("Enters here")
           const timeBlocks = schedule.split(", ");
           const parsedBlocks = timeBlocks.map((block) => {
             const timeMatch = block.match(/From (.*?) to (.*?) Prep/);
@@ -345,6 +345,7 @@ function TimeSlotPickerComponent({translate, applyAttributeChange, selectedDayNa
 
               // Convert "From" time to a Date object
               const fromDateTime = convertToDateTime(fromTime, dayLower);
+              const cutOffTime = convertToDateTime(cutOffTimes[dayLower], dayLower)
     
               // Subtract the preparation time from the "From" time
               fromDateTime.setHours(fromDateTime.getHours() - Math.floor(prepTime));
@@ -352,7 +353,11 @@ function TimeSlotPickerComponent({translate, applyAttributeChange, selectedDayNa
 
               // Check if the current time is past the prep time, but only if it's today
               let isDisabled = false;
-              if (dayLower != 'saturday') {
+              const isCOTLargerThanFrom = cutOffTime > fromDateTime;
+
+              //console.log(isCOTLargerThanFrom, cutOffTime, fromDateTime, "Prep: ", prepTime)
+
+              if (!isCOTLargerThanFrom || prepTime != 0) {
                 isDisabled = isToday && now >= fromDateTime;
               }
     
@@ -376,6 +381,7 @@ function TimeSlotPickerComponent({translate, applyAttributeChange, selectedDayNa
   }
   
   function isPastCutOffTime(cutOffTime) {
+    //console.log(cutOffTime)
     const timeZone = "Asia/Beirut";
     const [cutOffHours, cutOffMinutes] = cutOffTime.split(":").map(Number);
 
@@ -392,8 +398,8 @@ function TimeSlotPickerComponent({translate, applyAttributeChange, selectedDayNa
     const nowHours = +parts.find(p => p.type === "hour").value;
     const nowMinutes = +parts.find(p => p.type === "minute").value;
 
-    console.log(`Now in Beirut: ${nowHours}:${nowMinutes}`);
-    console.log(`Cut-off Time: ${cutOffHours}:${cutOffMinutes}`);
+    //console.log(`Now in Beirut: ${nowHours}:${nowMinutes}`);
+    //console.log(`Cut-off Time: ${cutOffHours}:${cutOffMinutes}`);
 
     // Compare manually
     if (nowHours > cutOffHours) return true;
@@ -425,6 +431,8 @@ function TimeSlotPickerComponent({translate, applyAttributeChange, selectedDayNa
 
   function getDaySchedule(parsedSchedule, day) {
     const dayLowerCase = day.toLowerCase();
+
+    //console.log("Parsed schedule: ", parsedSchedule, day)
     
     // Check if the day exists in the parsed schedule and if it's enabled
     if (parsedSchedule[dayLowerCase] && parsedSchedule[dayLowerCase].enabled) {
